@@ -1,0 +1,43 @@
+#
+#    Book Store
+#
+
+version: '3'
+
+services:
+
+  #############################################################################
+  # Users Service
+  #############################################################################
+  uapp:
+    image: "uapp:latest"
+    depends_on:
+      - udb
+    container_name: uapp
+    restart: always
+    environment:
+      - PORT=8080
+      - DBHOST=udb
+      - DBUSER=postgres
+      - DBPASSWORD=admin
+      - DBNAME=users
+      - DBPORT=5432
+      - DBSSLMODE=disable
+    ports:
+      - "8080:8080"
+
+  #############################################################################
+  # DB
+  #############################################################################
+  udb:
+    image: "postgres:latest"
+    container_name: udb
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=users
+    volumes:
+      - ./init-users.sql:/docker-entrypoint-initdb.d/init-users.sql
+    ports:
+      - "5432:5432"
