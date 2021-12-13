@@ -12,12 +12,12 @@ services:
   uapp:
     image: "uapp:latest"
     depends_on:
-      - udb
+      - db
     container_name: uapp
     restart: always
     environment:
       - PORT=8080
-      - DBHOST=udb
+      - DBHOST=db
       - DBUSER=postgres
       - DBPASSWORD=admin
       - DBNAME=users
@@ -27,16 +27,35 @@ services:
       - "8080:8080"
 
   #############################################################################
-  # DB
+  # Books Service
   #############################################################################
-  udb:
-    image: "postgres:latest"
-    container_name: udb
+  bapp:
+    image: "bapp:latest"
+    depends_on:
+      - db
+    container_name: bapp
     restart: always
     environment:
-      - POSTGRES_USER=postgres
+      - PORT=8081
+      - DBHOST=db
+      - DBUSER=postgres
+      - DBPASSWORD=admin
+      - DBNAME=books
+      - DBPORT=5432
+      - DBSSLMODE=disable
+      - USER_APP_PORT=8080
+    ports:
+      - "8081:8081"
+
+  #############################################################################
+  # DB
+  #############################################################################
+  db:
+    image: "postgres:latest"
+    container_name: db
+    restart: always
+    environment:
       - POSTGRES_PASSWORD=admin
-      - POSTGRES_DB=users
     volumes:
       - ./init-users.sql:/docker-entrypoint-initdb.d/init-users.sql
     ports:
