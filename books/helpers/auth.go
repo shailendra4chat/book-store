@@ -6,7 +6,7 @@ import (
 	"github.com/shailendra4chat/book-store/books/config"
 )
 
-var uri string = "http://" + config.Conf("USER_APP_HOST") + ":" + config.Conf("USER_APP_PORT") + "/auth/token"
+var uri string = "http://" + config.Conf("UAPP_HOST") + ":" + config.Conf("UAPP_PORT") + "/auth/token"
 var client = &http.Client{}
 
 // Check If user is Admin

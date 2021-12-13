@@ -17,7 +17,7 @@ func connectionString() string {
 	host := config.Conf("DBHOST")
 	user := config.Conf("DBUSER")
 	password := config.Conf("DBPASSWORD")
-	dbname := config.Conf("DBNAME")
+	dbname := config.Conf("BAPP_DBNAME")
 	port := config.Conf("DBPORT")
 	sslmode := config.Conf("DBSSLMODE")
 

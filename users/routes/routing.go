@@ -12,7 +12,7 @@ import (
 )
 
 func HandleRouting() {
-	host := ":" + config.Conf("PORT")
+	host := ":" + config.Conf("UAPP_PORT")
 	r := mux.NewRouter()
 
 	r.Use(middlewares.HeadersMiddleware)
