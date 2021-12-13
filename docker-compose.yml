@@ -55,8 +55,10 @@ services:
     container_name: db
     restart: always
     environment:
+      - POSTGRES_MULTIPLE_DATABASES=users,books
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=admin
     volumes:
-      - ./init-users.sql:/docker-entrypoint-initdb.d/init-users.sql
+      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
