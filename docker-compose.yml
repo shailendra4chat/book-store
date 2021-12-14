@@ -68,7 +68,7 @@ services:
   # DB GUI - PGAdmin 4
   #############################################################################
   dbui:
-    image: "dpage/pgadmin4"
+    image: "dpage/pgadmin4:latest"
     container_name: dbui
     restart: always
     environment:
