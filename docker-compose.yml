@@ -63,3 +63,16 @@ services:
       - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+
+  #############################################################################
+  # DB GUI - PGAdmin 4
+  #############################################################################
+  dbui:
+    image: "dpage/pgadmin4"
+    container_name: dbui
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "8083:80"
