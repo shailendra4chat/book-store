@@ -11,7 +11,16 @@ import (
 	"github.com/shailendra4chat/book-store/books/models"
 )
 
-// Handle add book
+// AddBook ... Add Book
+// @Summary Add Book
+// @Description Add Book
+// @Tags Books
+// @Accept json
+// @Param book body models.Book true "Book Data"
+// @Success 200 {object} models.Book
+// @Failure 400,500 {object} object
+// @Router /book [post]
+// @Security ApiKeyAuth
 func AddBook(w http.ResponseWriter, r *http.Request) {
 
 	isAdmin := helpers.IsAdmin(r.Header.Get("x-access-token"))
@@ -46,7 +55,14 @@ func checkIfAdded(title string) bool {
 	return true
 }
 
-// Handle get all books
+// GetBooks ... Get all books
+// @Summary Get all books
+// @Description get all books
+// @Tags Books
+// @Success 200 {array} models.Book
+// @Failure 404 {object} object
+// @Router /books [get]
+// @Security ApiKeyAuth
 func GetBooks(w http.ResponseWriter, r *http.Request) {
 
 	isAuthorisedUser := helpers.IsAuthorisedUser(r.Header.Get("x-access-token"))
@@ -65,7 +81,17 @@ func GetBooks(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Handle book update
+// UpdateBook ... Update Book by Id
+// @Summary Update book by Id
+// @Description Update book by Id
+// @Tags Books
+// @Accept json
+// @Param id path string true "Book ID"
+// @Param book body models.Book true "Book Data"
+// @Success 201 {object} models.Book
+// @Failure 400,500 {object} object
+// @Router /book/{id} [put]
+// @Security ApiKeyAuth
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
 
 	isAdmin := helpers.IsAdmin(r.Header.Get("x-access-token"))

@@ -9,13 +9,18 @@ import (
 	"github.com/shailendra4chat/book-store/users/config"
 	"github.com/shailendra4chat/book-store/users/handlers"
 	"github.com/shailendra4chat/book-store/users/middlewares"
+
+	_ "github.com/shailendra4chat/book-store/users/docs"
+
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 func HandleRouting() {
 	host := ":" + config.Conf("UAPP_PORT")
 	r := mux.NewRouter()
 
-	r.Use(middlewares.HeadersMiddleware)
+	// Swagger
+	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	r.HandleFunc("/register", handlers.Register).Methods("POST")
 
@@ -37,7 +42,7 @@ func HandleRouting() {
 	// Validate token for Admin
 	s.HandleFunc("/token/admin", handlers.ValidateAdminToken).Methods("GET")
 
-	fmt.Printf("Users app is running on port: %v", config.Conf("PORT"))
+	fmt.Printf("Users app is running on port: %v", config.Conf("UAPP_PORT"))
 
 	log.Fatal(http.ListenAndServe(host, r))
 }

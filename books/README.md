@@ -1,2 +1,3 @@
-# books
-Golang
+# Online Book Store - Books microservice
+
+Manages Books

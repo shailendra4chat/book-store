@@ -15,7 +15,15 @@ import (
 	"github.com/shailendra4chat/book-store/users/models"
 )
 
-// Handle user registration
+// Register ... Register User
+// @Summary Register new user based on paramters
+// @Description Register new user
+// @Tags Users
+// @Accept json
+// @Param user body models.User true "User Data"
+// @Success 200 {object} object
+// @Failure 400,500 {object} object
+// @Router /register [post]
 func Register(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
@@ -51,7 +59,15 @@ func checkIfRegistered(email string) bool {
 	return true
 }
 
-// Handle user login
+// Login ... Login User
+// @Summary Login user based on paramters
+// @Description Login user
+// @Tags Users
+// @Accept json
+// @Param user body models.User true "User Data"
+// @Success 200 {object} object
+// @Failure 400,500 {object} object
+// @Router /login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	user := &models.User{}
 	err := json.NewDecoder(r.Body).Decode(user)
@@ -104,7 +120,14 @@ func checkCreds(email, password string) map[string]interface{} {
 	return resp
 }
 
-// Handle all users
+// GetUsers ... Get all users
+// @Summary Get all users
+// @Description get all users
+// @Tags Users
+// @Success 200 {array} models.User
+// @Failure 404 {object} object
+// @Router /auth/users [get]
+// @Security ApiKeyAuth
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	if err := db.Database.Find(&users).Error; err != nil {
@@ -115,7 +138,17 @@ func GetUsers(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(users)
 }
 
-// Handle user update
+// UpdateUser ... Update User by Id
+// @Summary Update user by Id
+// @Description Update user by Id
+// @Tags Users
+// @Accept json
+// @Param id path string true "User ID"
+// @Param user body models.User true "User Data"
+// @Success 201 {object} models.User
+// @Failure 400,500 {object} object
+// @Router /auth/update-user/{id} [put]
+// @Security ApiKeyAuth
 func UpdateUser(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
@@ -132,7 +165,16 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&user)
 }
 
-// Handle user delete - Only admin can delete
+// DeleteUser ... Delete User by Id
+// @Summary Delete user by Id
+// @Description Delete user by Id
+// @Tags Users
+// @Accept json
+// @Param id path string true "User ID"
+// @Success 200 {object} models.User
+// @Failure 400,500 {object} object
+// @Router /auth/delete-user/{id} [delete]
+// @Security ApiKeyAuth
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
 
 	isAdmin := helpers.IsAdmin(r.Header.Get("x-access-token"))
