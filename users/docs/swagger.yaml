@@ -135,6 +135,37 @@ paths:
       summary: Update user by Id
       tags:
       - Users
+  /auth/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Upload file
+      parameters:
+      - description: Upload file
+        in: formData
+        name: myFile
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: object
+      security:
+      - ApiKeyAuth: []
+      summary: Upload file
+      tags:
+      - Users
   /auth/users:
     get:
       description: get all users

@@ -16,7 +16,7 @@ import (
 )
 
 func HandleRouting() {
-	host := ":" + config.Conf("UAPP_PORT")
+	host := config.Conf("UAPP_HOST") + ":" + config.Conf("UAPP_PORT")
 	r := mux.NewRouter()
 
 	// Swagger
@@ -35,6 +35,8 @@ func HandleRouting() {
 	s.HandleFunc("/update-user/{id}", handlers.UpdateUser).Methods("PUT")
 
 	s.HandleFunc("/delete-user/{id}", handlers.DeleteUser).Methods("DELETE")
+
+	s.HandleFunc("/upload", handlers.Upload)
 
 	// Validate token
 	s.HandleFunc("/token", handlers.ValidateToken).Methods("GET")
